@@ -25,6 +25,7 @@ import UseContextProvider from './context/UseContextProvider';
 import './index.css';
 import Layout from './Layout.jsx';
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode> 
     <UseContextProvider >    

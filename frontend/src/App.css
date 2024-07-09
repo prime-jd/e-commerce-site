@@ -1,4 +1,4 @@
-body {
+/* body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -16,4 +16,21 @@ nav a {
   color: white;
   margin: 0 1em;
   text-decoration: none;
+} */
+
+/* src/App.css */
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
 }
+
+h1 {
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
