@@ -6,8 +6,8 @@
   }
   
   .product-card {
-    border: 2px solid #ccc; /* Make the border thicker and more visible 
-    border-radius: 12px; /* Add rounded corners 
+    border: 2px solid #ccc;  
+    border-radius: 12px;
     overflow: hidden;
     width: 300px;
     margin: 1em;
@@ -64,18 +64,16 @@
     text-align: center;
     margin-bottom: 10px;
   }
+  */
+   
+
   
-   */
 
-   /* src/components/ProductList.css */
-
-/* src/components/ProductList.css */
-
-.product-list {
+ .product-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
   padding: 16px;
   box-sizing: border-box;
-}
+}  
 

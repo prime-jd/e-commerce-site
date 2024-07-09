@@ -8,6 +8,7 @@ import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx'
 import Logout from './components/Logout.jsx';
 
+
 const App = () => {
   return (
     <Router>
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
          <Route path="/" element={<Layout />} >
           <Route path="" element={<ProductList />} />
+
           <Route path="/cart" element={<Cart />} />
          </Route>
         </Routes>
