@@ -73,17 +73,20 @@
 
 
 // src/components/ProductList.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import ProductCard from './ProductCard.jsx';
-import '../css/ProductCard.css';
+import '../css/ProductList.css';
+import UserContext from '../context/UserContext.js';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const info = localStorage.getItem('info');
 
   useEffect(() => {
+    console.log(info);
     const fetchProducts = async () => {
       try {
         const response = await axios.get('https://fakestoreapi.com/products');
@@ -108,9 +111,12 @@ const ProductList = () => {
 
   return (
     <div className="product-list">
-      {products.map(product => (
-        <ProductCard key={product.id} product={product} />
+      
+      {products.map(product => (<div key={product.id}>
+        <ProductCard productId= {product.id} product={product}/>
+       </div>
       ))}
+      
     </div>
   );
 };
