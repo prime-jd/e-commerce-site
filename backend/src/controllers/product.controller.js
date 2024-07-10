@@ -18,7 +18,7 @@ const addToCart = asyncHandler( async(req,res)=>{
     
     const cart = await Cart.create({
         id,
-        product,
+        title,
         price,
         image
     })
@@ -32,9 +32,9 @@ const displayCart = asyncHandler(async(req, res)=>{
 })
 
 const removeFromCart = asyncHandler(async (req, res) => {
-    const { product } = req.body;
-    if (!product) throw new ApiError(400, 'Product details not provided');
-    await Cart.deleteOne({ product });
+    const { id } = req.body;
+    if (!id) throw new ApiError(400, 'Product details not provided');
+    await Cart.deleteOne({ id });
     const cartItems = await Cart.find();
     if (cartItems.length === 0) {
       return res.json(new ApiResponse(200, 'All products removed from cart', []));
