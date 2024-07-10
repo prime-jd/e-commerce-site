@@ -79,4 +79,44 @@
   box-sizing: border-box;
 }
 
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
 
+.filter-options h2 {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.filter-options form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.filter-options label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1em;
+  color: #333;
+}
+
+.filter-options select,
+.filter-options input {
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+}
