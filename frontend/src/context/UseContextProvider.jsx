@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import UserContext from './UserContext';
 
 const UseContextProvider = ({ children }) => {
+    const [info, setInfo]= React.useState();
   const [user, setUser] = React.useState(() => {
     const savedUser = localStorage.getItem('user');
     return savedUser ? JSON.parse(savedUser) : '';
@@ -20,8 +21,12 @@ const UseContextProvider = ({ children }) => {
     localStorage.setItem('status', JSON.stringify(status));
   }, [status]);
 
+  useEffect(() => {
+    localStorage.setItem('info', JSON.stringify(info));
+  }, [info]);
+
   return (
-    <UserContext.Provider value={{ user, setUser, status, setStatus }}>
+    <UserContext.Provider value={{ user, setUser, status, setStatus,info, setInfo }}>
       {children}
     </UserContext.Provider>
   );
