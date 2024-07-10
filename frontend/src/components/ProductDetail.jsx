@@ -1,111 +1,49 @@
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
-// import '../css/ProductDetailPage.css';
+// src/components/ProductDetails.jsx
+import React, { useContext, useEffect, useState } from 'react';
+import '../css/ProductDetailPage.css';
+import UserContext from '../context/UserContext';
 
-// const ProductDetailPage = () => {
-//   const { id } = useParams();
-//   const [product, setProduct] = useState({});
-//   const [rating, setRating] = useState(0);
-//   const [review, setReview] = useState('');
-//   const [quantity, setQuantity] = useState(1);
-//   const [color, setColor] = useState('');
-//   const [address, setAddress] = useState('');
+const ProductDetails = () => {
+    const [product, setProduct] = useState();
+  const [quantity, setQuantity] = useState(1);
+  const info = localStorage.getItem('info');
 
-//   useEffect(() => {
-//     const fetchProduct = async () => {
-//       try {
-//         const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
-//         setProduct(response.data);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
+  useEffect(()=>{
+    console.log(info)
+    if(product)
+        setProduct(info);
+  },[])
 
-//     fetchProduct();
-//   }, [id]);
+  return (
+    <div className="product-details-container">
+      <img src={product.image} alt={product.title} />
+      <div className="product-details-info">
+        <h2>{product.title}</h2>
+        <p>{product.description}</p>
+        <p className="price">${product.price}</p>
+        <div className="quantity-select">
+          <label htmlFor="quantity">Quantity:</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+        </div>
+        <button className="buy-product">Buy Product</button>
+        <div className="rating-feedback">
+          <h3>Rating: {product.rating.rate} ({product.rating.count} reviews)</h3>
+          <div className="feedback-section">
+            <h3>Feedback</h3>
+            <textarea placeholder="Write your feedback"></textarea>
+            <button className="submit-feedback">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-//   const handleSubmitReview = async (event) => {
-//     event.preventDefault();
-//     try {
-//       const response = await axios.post(`https://fakestoreapi.com/products/${id}/reviews`, {
-//         rating,
-//         review,
-//       });
-//       console.log(response.data);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   return (
-//     <div className="product-detail-page">
-//       <div className="product-image">
-//         <img src={product.image} alt={product.title} />
-//       </div>
-//       <div className="product-info">
-//         <h2>{product.title}</h2>
-//         <p>{product.description}</p>
-//         <p className="price">${product.price}</p>
-//         <p className="category">{product.category}</p>
-//         <div className="rating">
-//           <span>Rating: {product.rating.rate}</span>
-//           <span>({product.rating.count} reviews)</span>
-//         </div>
-//         <div className="actions">
-//           <button className="add-to-cart" onClick={() => console.log('Add to cart')}>
-//             Add to Cart
-//           </button>
-//           <button className="buy-now" onClick={() => console.log('Buy now')}>
-//             Buy Now
-//           </button>
-//         </div>
-//         <div className="quantity">
-//           <label>Quantity:</label>
-//           <input
-//             type="number"
-//             value={quantity}
-//             onChange={(event) => setQuantity(event.target.value)}
-//           />
-//         </div>
-//         <div className="color-options">
-//           <label>Color:</label>
-//           <select value={color} onChange={(event) => setColor(event.target.value)}>
-//             <option value="">Select a color</option>
-//             <option value="red">Red</option>
-//             <option value="blue">Blue</option>
-//             <option value="green">Green</option>
-//           </select>
-//         </div>
-//         <div className="address">
-//           <label>Address:</label>
-//           <textarea value={address} onChange={(event) => setAddress(event.target.value)} />
-//         </div>
-//       </div>
-//       <div className="reviews">
-//         <h3>Reviews</h3>
-//         <ul>
-//           {product.reviews.map((review) => (
-//             <li key={review.id}>
-//               <p>{review.review}</p>
-//               <p>Rating: {review.rating}</p>
-//             </li>
-//           ))}
-//         </ul>
-//         <form onSubmit={handleSubmitReview}>
-//           <label>Rating:</label>
-//           <input
-//             type="number"
-//             value={rating}
-//             onChange={(event) => setRating(event.target.value)}
-//           />
-//           <label>Review:</label>
-//           <textarea value={review} onChange={(event) => setReview(event.target.value)} />
-//           <button type="submit">Submit Review</button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProductDetailPage;
+export default ProductDetails;
