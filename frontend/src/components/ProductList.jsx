@@ -3,11 +3,12 @@ import axios from 'axios';
 import ProductCard from './ProductCard.jsx';
 import '../css/ProductList.css';
 import UserContext from '../context/UserContext.js';
+import Loading from './Loading.jsx';
 
 const ProductList = () => {
   const [products, setProducts] = useState();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const [filter, setFilter] = useState({
     category: '',
     price: '',
@@ -42,12 +43,10 @@ const ProductList = () => {
   }) ?? [];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading prop={error}/>;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+ 
 
   return (
     <div className="product-list">

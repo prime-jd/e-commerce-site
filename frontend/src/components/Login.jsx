@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    try{
     const response = await fetch('/api/v1/user/login', {
       method: 'POST',
       headers: {
@@ -29,8 +29,13 @@ const Login = () => {
       setStatus(true)
       setMessage('Login successful');
       navigate('/');
-    } else {
-      setMessage(data.message || 'Login failed');
+    }
+    else{
+      setMessage('User Not Found')
+    }
+   } catch(error) {
+      setMessage(  'Login failed');
+      console.error(error);
     }
   };
 
