@@ -4,6 +4,7 @@ import React, { useContext, useState ,useEffect} from 'react';
 import '../css/Header.css';
 import UserContext from '../context/UserContext';
 import Logout from './Logout.jsx';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const {setStatus, status}= useContext(UserContext)
@@ -39,9 +40,9 @@ const Header = () => {
           </a>
         </h1>
         <nav className="nav-links">
-          {status? <button className="nav-button" onClick={() => window.location.href = '/logout'}>Logout </button> :<button className="nav-button" onClick={() => window.location.href = '/login'}>Login </button>}
-          <button className="nav-button signup" onClick={() => window.location.href = '/signup'}>Sign Up</button>
-          {status && <button className="nav-button" onClick={() => handleCart()}>{isCart && `Items`}Cart</button>}
+          {status? <Link className="nav-button" to='/logout'>Logout </Link> :<Link className="nav-button" to= '/login'>Login </Link>}
+          <Link className="nav-button signup" to ='/signup'>Sign Up</Link>
+          {status && <Link className="nav-button" to='/cart'>{isCart && `Items`}Cart</Link>}
         </nav>
       </div>
     </header>
