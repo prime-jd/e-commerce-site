@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const CartSchema = new mongoose.Schema({
-    id :{
+    productId :{
         type: Number
     },
-    title: {
+    product: {
         type : String,
     } ,
     price: {
@@ -12,6 +12,9 @@ const CartSchema = new mongoose.Schema({
     },
     image : {
         type  : String
+    },
+    quantity : {
+        type : Number
     }
 });
 

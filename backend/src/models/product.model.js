@@ -1,15 +1,18 @@
 import mongoose from "mongoose"
 
-const ProductSchema = new mongoose.Schema({
-    product: {
-        type : String,
-    } ,
-    price: {
-        type : Number
+const FeedbackSchema = new mongoose.Schema({
+    user:{
+        type : String
     },
-    image : {
+    productId: {
+        type : Number,
+    } ,
+    rating: {
+        type : String
+    },
+    feedback : {
         type  : String
     }
 })
 
-export const Product = mongoose.model('Product', ProductSchema)
+export const Feedback = mongoose.model('Feedback', FeedbackSchema)

@@ -4,19 +4,25 @@
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
-  border-radius: 8px;
   margin: 8px;
   padding: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   width: 100%;  /* Allows the card to take the full width of the container */
   box-sizing: border-box; /* Ensure padding is included in the width calculation */
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .product-card img {
   width: 100%;
   height: auto;
   border-radius: 8px;
+}
+.product-card:hover {
+  transform: translateY(-5px); /* Move card up slightly on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  border-color: #337ab7; /* Change border color on hover */
 }
 
 .product-details {

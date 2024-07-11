@@ -3,33 +3,83 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/ProductDetailPage.css';
 import UserContext from '../context/UserContext';
+import StarRating from './StarRating';
 
 const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [message, setMessage] = useState('');
+  const [rating, setRating] = useState(0); // New state for rating
+  const [feedback, setFeedback] = useState(''); // New state for feedback text
+  const [feedbackList, setFeedbackList] = useState([]); // New state for storing feedback list
   let info = localStorage.getItem('info');
-  const {status} = useContext(UserContext);
-
+  let user = localStorage.getItem('user');
+  const { status } = useContext(UserContext);
 
   useEffect(() => {
-    console.log(status);
     const info1 = JSON.parse(info);
     setProduct(info1);
+    fetchFeedback(info1.id); // Fetch feedback when the component mounts
   }, [info]);
 
-  const handleAddToCart = async () => {
+  const fetchFeedback = async (productId) => {
+    try {
+      const response = await fetch('/api/v1/user/getfeedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId }),
+      });
+      if (!response.ok) {
+        throw new Error(`Error fetching feedback: ${response.statusText}`);
+      }
 
+      const data = await response.json();
+      console.log(data)
+      setFeedbackList(data.data);
+    } catch (error) {
+      console.error('Error fetching feedback:', error);
+    }
+  };
+
+  const handleAddToCart = async () => {
     try {
       const response = await axios.post('/api/v1/user/addtocart', {
         productId: product.id,
         title: product.title,
         image: product.image,
         price: product.price,
-        quantity: quantity,
+        quantity:quantity,
       });
-      console.log('Product added to cart:', response.data);
+      setMessage(response.data.message);
+      setTimeout(() => {
+        setMessage('');
+      }, 2000); // Clear message after 2 seconds
     } catch (error) {
       console.error('Error adding product to cart:', error);
+    }
+  };
+
+  const handleSubmitFeedback = async () => {
+
+    try {
+      const response = await axios.post('/api/v1/user/feedback', {
+        user,
+        productId: product.id,
+        rating: rating,
+        feedback: feedback,
+      });
+      console.log('Feedback submitted:', response.data);
+      setMessage(response.data.message);
+      setFeedback('');
+      setRating(0);
+      fetchFeedback(product.id); // Fetch the updated feedback list
+      setTimeout(() => {
+        setMessage('');
+      }, 2000); // Clear message after 2 seconds
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
     }
   };
 
@@ -51,15 +101,19 @@ const ProductDetails = () => {
             onChange={(e) => setQuantity(e.target.value)}
           />
         </div>
-        <p>Please Login first</p>
-        { <div className="button-group">
-           {status &&<button className="buy-product">Buy Product</button>}
-          {status && <button className="additional-button" onClick={handleAddToCart}>
-            Add to Cart
-          </button>}
-          <p style={{color : "red"}}> Please Login first</p>
-        </div>}
-        <div className="rating-feedback">
+        {message && <div className="message">{message}</div>}
+        <div className="button-group">
+          {status && (
+            <>
+              <button className="buy-product">Buy Product</button>
+              <button className="additional-button" onClick={handleAddToCart}>
+                Add to Cart
+              </button>
+            </>
+          )}
+          {!status && <p style={{ color: 'red' }}>Please login first</p>}
+        </div>
+        {status && <div className="rating-feedback">
           {product.rating && (
             <>
               <h3>
@@ -67,12 +121,32 @@ const ProductDetails = () => {
               </h3>
               <div className="feedback-section">
                 <h3>Feedback</h3>
-                <textarea placeholder="Write your feedback"></textarea>
-                <button className="submit-feedback">Submit</button>
+                <StarRating rating={rating} setRating={setRating} />
+                <textarea
+                  placeholder="Write your feedback"
+                  value={feedback}
+                  onChange={(e) => setFeedback(e.target.value)}
+                ></textarea>
+                <button className="submit-feedback" onClick={handleSubmitFeedback}>
+                  Submit
+                </button>
+              </div>
+              <div className="feedback-list">
+                {feedbackList?.map((fb, index) => (
+                  <div key={index} className="feedback-item">
+                    <div className="feedback-rating">
+                      <img style={{height:"40px",width: "40px"}} src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/640px-User_icon_2.svg.png'/>
+                      <h3>{fb.user}</h3>
+                      <StarRating rating={fb.rating} readOnly />
+                    </div>
+                    <p>{fb.feedback}</p>
+                    <p className="feedback-username">- {fb.username}</p>
+                  </div>
+                ))}
               </div>
             </>
           )}
-        </div>
+        </div>}
       </div>
     </div>
   );
