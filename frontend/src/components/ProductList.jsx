@@ -16,6 +16,7 @@ const ProductList = () => {
   });
 
   useEffect(() => {
+
     console.log(JSON.parse(localStorage.getItem('info')));
     const fetchProducts = async () => {
       try {
@@ -27,7 +28,7 @@ const ProductList = () => {
         setLoading(false);
       }
     };
-
+    
     fetchProducts();
   }, []);
 
@@ -42,9 +43,7 @@ const ProductList = () => {
     return true;
   }) ?? [];
 
-  if (loading) {
-    return <Loading prop={error}/>;
-  }
+  
 
  
 
@@ -85,11 +84,11 @@ const ProductList = () => {
           </label>
         </form>
       </div>
-      {filteredProducts.map((product) => (
+      {loading ? <Loading/>:<>{filteredProducts.map((product) => (
         <div key={product.id}>
           <ProductCard productId={product.id} product={product} />
         </div>
-      ))}
+      ))}</>}
     </div>
   );
 };
