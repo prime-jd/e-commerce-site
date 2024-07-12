@@ -6,10 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   const { setStatus, status } = useContext(UserContext);
-  const [isCart, setIsCart] = useState(() => {
-    const savedStatus = localStorage.getItem('isCart');
-    return savedStatus ? JSON.parse(savedStatus) : false;
-  });
+  
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
