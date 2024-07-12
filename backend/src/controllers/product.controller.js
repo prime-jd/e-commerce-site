@@ -23,6 +23,9 @@ const addToCart = asyncHandler( async(req,res)=>{
 })
 
 const displayCart = asyncHandler(async(req, res)=>{
+    if(!req.user){
+      res.json(new ApiResponse(200, "Please Login First"))
+    }
     const cart = await Cart.find();
     if(!cart) throw new ApiError(404, "Cart not found");
     return res.json(new ApiResponse(200, "All products in cart", cart))
