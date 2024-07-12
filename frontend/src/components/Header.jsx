@@ -40,11 +40,11 @@ const Header = () => {
           <button type="submit" className="search-button">Search</button>
         </form>
         <nav className="nav-links">
-          {status ? (
+          {status ? 
             <Link className="nav-button" to='/logout'>Logout</Link>
-          ) : (
+           : 
             <Link className="nav-button" to='/login'>Login</Link>
-          )}
+          }
           <Link className="nav-button signup" to='/signup'>Sign Up</Link>
           {status && <Link className="nav-button" to='/cart'>Cart</Link>}
           <Link className="nav-button" to='/'>Items</Link>

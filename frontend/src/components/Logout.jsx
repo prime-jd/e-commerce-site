@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import UserContext from '../context/UserContext';
 import '../css/Logout.css';
 import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
-  const { setUser, setStatus } = useContext(UserContext);
+  const { status,setUser, setStatus } = useContext(UserContext);
   const navigate = useNavigate();
   const [message, setMessage] = React.useState('');
 
@@ -21,8 +21,9 @@ const Logout = () => {
           setMessage('Logged out successfully');
           setUser('');
           setStatus(false);
-          localStorage.removeItem('user');
-          localStorage.removeItem('status');
+          console.log(status)
+          // localStorage.removeItem('user');
+          // localStorage.removeItem('status');
     
           // navigate('/');
         } else {
@@ -33,9 +34,13 @@ const Logout = () => {
         console.error('Logout error:', err);
         // navigate('/');
       }).finally(() => {
+       setStatus(false);
         navigate('/');
       });
   };
+  // useEffect(() => {
+  //   localStorage.setItem('status', JSON.stringify(status));
+  // }, [status]);
 
   const handleCancel = () => {
     navigate('/');
