@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import '../css/Cart.css';
 import UserContext from '../context/UserContext.js'
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
-  const { status } = useContext(UserContext);
+  const { status , setBuy} = useContext(UserContext);
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetch('/api/v1/user/cart', {
       method: 'GET',
@@ -19,6 +22,7 @@ const Cart = () => {
       .catch((err) => console.log(err));
   }, [setCart,status]);
 
+ 
   const removeFromCart = (product) => {
     fetch(`/api/v1/user/cartremove`, {
       method: 'POST',
@@ -41,8 +45,9 @@ const Cart = () => {
   };
 
   const buyProduct = (product) => {
-    // Add logic to handle buying the product
-    console.log(`Buying product: ${product.product}`);
+    setBuy(product)
+    localStorage.setItem('buy', JSON.stringify(product))
+    navigate('/buy');
   };
 
   return (
