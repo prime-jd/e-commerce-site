@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Feedback } from "../models/product.model.js";
 import { Cart } from "../models/cart.model.js";
+import { Buy } from "../models/buy.model.js";
 
 
 
@@ -60,10 +61,31 @@ const removeFromCart = asyncHandler(async (req, res) => {
     if(!feedback) throw new ApiError(404, "Feedback not found");
     return res.json(new ApiResponse(200, "All feedbacks", feedback))
   })
+
+  
+
+  const buyFromStore = asyncHandler(async (req, res)=>{
+    const notbuyed = await Buy.find({payment : false})
+    if(notbuyed){
+      Buy.deleteMany({payment: false});
+    }
+    const {productId,product,price,image,quantity,address} = req.body;
+    const productInCart = await Buy.create({
+      productId,
+      product,
+      price,
+      image,
+      quantity,
+      payment : false,
+      address
+    });
+    return res.json(new ApiResponse(200, "product initiated to buy", productInCart))
+  });
   
 
 export {
-
+   
+    buyFromStore,
     addToCart,
     displayCart,
     removeFromCart,
