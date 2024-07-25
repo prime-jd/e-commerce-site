@@ -17,6 +17,11 @@ const UseContextProvider = ({ children }) => {
     return savedStatus ? JSON.parse(savedStatus) : false;
   });
 
+  const [buy, setBuy] = React.useState(() => {
+    const savedBuy = localStorage.getItem('buy');
+    return savedBuy ? JSON.parse(savedBuy) : '';
+  });
+
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user));
   }, [user]);
@@ -29,8 +34,12 @@ const UseContextProvider = ({ children }) => {
     localStorage.setItem('info', JSON.stringify(info));
   }, [info]);
 
+  useEffect(() => {
+    localStorage.setItem('buy', JSON.stringify(buy));
+  }, [buy]);
+
   return (
-    <UserContext.Provider value={{ user, setUser, status, setStatus,info, setInfo }}>
+    <UserContext.Provider value={{ user, setUser, status, setStatus,info, setInfo, buy, setBuy}}>
       {children}
     </UserContext.Provider>
   );
