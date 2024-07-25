@@ -92,9 +92,9 @@ const Header = () => {
           
             placeholder="Search for products..."
           />
-          <button className="search-button" type="submit">
+          {/* <button className="search-button" type="submit">
             Search
-          </button>
+          </button> */}
           { searchResults.length > 0 && (
             <div className="search-results">
               {searchResults.map(product => (
