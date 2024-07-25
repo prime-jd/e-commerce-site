@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../css/ProductDetailPage.css';
 import UserContext from '../context/UserContext';
 import StarRating from './StarRating';
+import { useNavigate } from 'react-router-dom';
 
 const ProductDetails = () => {
   const [product, setProduct] = useState({});
@@ -12,8 +13,10 @@ const ProductDetails = () => {
   const [rating, setRating] = useState(0); // New state for rating
   const [feedback, setFeedback] = useState(''); // New state for feedback text
   const [feedbackList, setFeedbackList] = useState([]); // New state for storing feedback list
+  const navigate = useNavigate();
   let info = localStorage.getItem('info');
   let user = localStorage.getItem('user');
+
   const { status } = useContext(UserContext);
 
   useEffect(() => {
@@ -83,6 +86,12 @@ const ProductDetails = () => {
     }
   };
 
+  const handleBuy = ()=>{
+    const info1 = JSON.parse(info);
+    localStorage.setItem('buy', JSON.stringify(info1))
+    navigate('/buy');
+  }
+
   return (
     <div className="product-details-container">
       {product.image && <img src={product.image} alt={product.title} />}
@@ -105,7 +114,7 @@ const ProductDetails = () => {
         <div className="button-group">
           {status && (
             <>
-              <button className="buy-product">Buy Product</button>
+              <button onClick={handleBuy} className="buy-product">Buy Product</button>
               <button className="additional-button" onClick={handleAddToCart}>
                 Add to Cart
               </button>
