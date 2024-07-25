@@ -10,6 +10,7 @@ import Signup from './components/Signup.jsx';
 import Logout from './components/Logout.jsx';
 import ProductDetails from './components/ProductDetail.jsx';
 import SplashScreen from './components/SplashScreen.jsx';
+import ProductBuyDetailsForm from './components/ProductBuyForm.jsx';
 
 const App = () => {
 
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             <Route path="" element={<ProductList />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/buy" element={<ProductBuyDetailsForm />} />
             <Route path="/product/:id" element={<ProductDetails />} />
           </Route>
         </Routes>
