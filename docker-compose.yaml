@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # mongo:
+  #   image: mongo:latest
+  #   container_name: mongo
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongo-data:/data/db
+  #   networks:
+  #     - mern-network
+
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: server_ecom
+    ports:
+      - "4000:4000"  # Port for the backend
+    volumes:
+      - ./backend:/app  # Bind mount for live reloading
+    # depends_on:
+    #   - mongo
+    env_file:
+      - .env
+    networks:
+      - ecom-network
+
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: client_ecom
+    ports:
+      - "3000:3000"  # Port for the React app
+    depends_on:
+      - server
+    networks:
+      - ecom-network
+
+# volumes:
+#   mongo-data:
+
+networks:
+  ecom-network:
+    driver: bridge

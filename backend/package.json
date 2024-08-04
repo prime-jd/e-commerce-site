@@ -6,7 +6,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "quadB",
-    "start": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
+    "start": "nodemon -r dotenv/config --experimental-json-modules src/index.js",
+    "dev": "node src/index.js"
   },
   "author": "Ravi Shankar Tripathi",
   "license": "ISC",
