@@ -1,5 +1,5 @@
 # E-Commerce Site
-<img src="screenshots/1.jpg">
+<img src="screenshots/1.png">
 A site Where user can buy add , and purchase products.
 
 1. user signup
